@@ -15,29 +15,32 @@ public class textCaptcha {
     int width;
     int height;
 
-    //    static List usedColors;
-
     public static int getRandomColor(){
         Random r = new Random();
         int number;
-//        do{
-//            number = r.nextInt(9);
-//        }while(usedColors.contains(number));
-//        usedColors.add(number);
-        number = r.nextInt(9);
-        switch(number){
-            case 0: return Color.BLACK;
-            case 1: return Color.BLUE;
-            case 2: return Color.CYAN;
-            case 3: return Color.DKGRAY;
-            case 4: return Color.GRAY;
-            case 5: return Color.GREEN;
-            case 6: return Color.MAGENTA;
-            case 7: return Color.RED;
-            case 8: return Color.YELLOW;
-            case 9: return Color.WHITE;
-            default: return Color.WHITE;
+        number = r.nextInt(11);
+        if(number == 0) {
+            return Color.WHITE;
+        } else if(number == 2) {
+            return Color.BLACK;
+        } else if(number == 3) {
+            return Color.RED;
+        } else if(number == 4) {
+            return Color.GREEN;
+        } else if(number == 5) {
+            return Color.YELLOW;
+        } else if(number == 6) {
+            return Color.BLUE;
+        } else if(number == 7) {
+            return Color.CYAN;
+        } else if(number == 8) {
+            return Color.MAGENTA;
+        } else if(number == 9) {
+            return Color.DKGRAY;
+        } else if(number == 10) {
+            return Color.GRAY;
         }
+        return Color.WHITE;
     }
 
     //    wrapper constructor
@@ -105,15 +108,17 @@ public class textCaptcha {
 
         int x = 0, y = 0;
         for(char ch : ans.toCharArray()) {
-//            x += (30 - (3 * wordLength)) + (Math.abs(random.nextInt()) % (65 - (1.2 * wordLength)));
 //            need to restrict the spacing
-            x += (wordLength * 2) + (Math.abs(random.nextInt()) % (60 - (2 * wordLength)));
-            y = 50 + Math.abs(random.nextInt()) % 100;
+            x += (wordLength * 2) + (random.nextInt((60 - (2 * wordLength))));
+            y = 50 + random.nextInt(101);
+
             Canvas cc = new Canvas(image1);
             Canvas cc2 = new Canvas(image2);
             Canvas cc3 = new Canvas(image3);
-            paint.setTextSkewX(random.nextFloat() - random.nextFloat());
+
+            paint.setTextSkewX((float) (Math.pow(-1, random.nextInt() & 1) * random.nextFloat()));
             paint.setColor(getRandomColor());
+
             cc.drawText(String.valueOf(ch), x, y, paint);
             cc2.drawText(String.valueOf(ch), x, y, paint);
             cc3.drawText(String.valueOf(ch), x, y, paint);
